@@ -13,7 +13,7 @@ pipeline{
         stage('Testing'){
             steps{
                 bat 'npm i'
-                bat 'npx cypress run --browser ${BROWSER} --spec ${SPEC}'
+                bat 'npx cypress run --browser chrome --spec cypress/integration/**/**'
             }
         }
         stage('Deploying'){
