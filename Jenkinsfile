@@ -2,23 +2,29 @@ pipeline{
     agent any
     parameters{
         string(name:'SPEC',defaultvalue:"cypress/integration/**/**",description: "Enter the script path that you want to execute")
-        string(name:'BROWSER',choise:['chrome', 'edge','firefox'],description: "Choise the browser where you want to execute your scripts")
-    }
-    options{
-        ansColor('xterm')
+        choice(name:'BROWSER',choise:['chrome', 'edge','firefox'],description: "Choise the browser where you want to execute your scripts")
     }
     stages{
         stage('Deploying'){
-        echo "Building the application"
+            steps{
+                bat 'echo Building the application'
+            }
         }
         stage('Testing'){
             steps{
-            bat "npm i"
-            bat "npx cypress run --browser ${BROWSER} --spec ${SPEC}"
+                bat "npm i"
+                bat "npx cypress run --browser ${BROWSER} --spec ${SPEC}"
             }
         }
         stage('Deploying'){
-            echo "Deploy the application"
+            steps{
+                echo "Deploy the application"
+            }
+        }
+    }
+    post{
+        always{
+            publishHTML([allowMissing:false, alwaysLinkTolastBuild:false, keepAll:true, reportDir:'cypress/report', reporfiles:'index.html',reportName:'HTML Report', ReportTitles:''])
         }
     }
 
