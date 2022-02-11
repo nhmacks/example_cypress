@@ -1,7 +1,7 @@
 pipeline{
     agent any
     parameters{
-        string(name:'SPEC',defaultvalue:"cypress/integration/**/**",description: "Enter the script path that you want to execute"),
+        string(name:'SPEC',defaultvalue:"cypress/integration/**/**",description: "Enter the script path that you want to execute")
         choice(name:'BROWSER',choise:['chrome', 'edge','firefox'],description: "Choise the browser where you want to execute your scripts")
     }
     stages{
